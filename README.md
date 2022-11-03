@@ -21,7 +21,15 @@ docker compose up
 
 This will watch the project directory and restart as necessary.
 
+The main webserver is started on `localhost:8000`, the mail server interface on
+`localhost:1080`.
+
 This also starts up the testing suite.
+
+### Accounts
+
+- Login `john.doe@mailer`: Password test
+- Login `jane.doe@mailer`: Password test
 
 ## Vulnerabilities
 
