@@ -17,7 +17,6 @@ interface Props {
 
 async function handle(
   userId: number | undefined,
-  postIdStr: string,
 ): Promise<{ resp?: Response; userId?: number }> {
   if (!userId) {
     return { resp: redirect("/user/login?warning=0") };
@@ -28,7 +27,7 @@ async function handle(
 
 export const handler: Handlers<Props, MiddleAuthentication> = {
   async GET(req, ctx) {
-    const { resp, userId } = await handle(ctx.state.id, ctx.params.id);
+    const { resp, userId } = await handle(ctx.state.id);
     if (resp) {
       return resp;
     }
@@ -40,7 +39,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     });
   },
   async POST(req, ctx) {
-    const { resp, userId } = await handle(ctx.state.id, ctx.params.id);
+    const { resp, userId } = await handle(ctx.state.id);
     if (resp) {
       return resp;
     }
