@@ -48,7 +48,11 @@ interface ShowPostsProps {
 function ShowPosts(props: ShowPostsProps) {
   return (
     <div class="posts">
-      {props.posts.map((post) => <ShowPublicPost post={post} />)}
+      {props.posts.map((post) => (
+        <a href={"/post/" + post.id}>
+          <ShowPublicPost post={post} />
+        </a>
+      ))}
     </div>
   );
 }

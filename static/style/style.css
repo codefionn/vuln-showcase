@@ -20,7 +20,7 @@ body {
     flex-direction: column;
 }
 
-header {
+header > div:first-of-type {
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -46,10 +46,16 @@ footer {
     text-align: center;
 }
 
+:is(footer, header) .seperator {
+    height: 1px;
+    background-color: grey;
+    margin: 10px 20px;
+}
+
 main {
     padding: 20px;
     flex-grow: 1;
-    width: 720px;
+    width: 800px;
     margin: auto;
 }
 

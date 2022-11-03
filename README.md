@@ -27,5 +27,6 @@ This also starts up the testing suite.
 
 - Search:
   - Search for private posts: `private') OR 1=1 OR ('' = '`
+  - Read every post, when increasing/decreasing the number in the URL
 - User:
   - Edit all posts, not just your own

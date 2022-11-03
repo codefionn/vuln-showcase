@@ -1,5 +1,18 @@
 .posts {
   margin-top: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.posts > a {
+  text-decoration: none;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+a:hover .post .post-title {
+  text-decoration: underline;
 }
 
 .post .post-title {
@@ -17,15 +30,24 @@
 }
 
 @media screen and (min-width: 420px) {
-  .posts .post {
+  .posts > .post {
+    width: 50%;
+  }
+
+  .posts > a {
     width: 50%;
   }
 }
 
-.post:where(.post-is-private) .post-title {
+.post :is(.post-title, .post-is-private) {
+  display: inline-block;
+}
+
+.post .post-title {
   width: 80%;
 }
 
-.post:where(.post-is-private) .post-is-private {
+.post .post-is-private {
   width: 20%;
+  color: red;
 }

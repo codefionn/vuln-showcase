@@ -4,7 +4,6 @@ import { redirect } from "../../../utils/control.ts";
 import { MiddleAuthentication } from "../../_middleware.ts";
 import { Post } from "../../../entity/Post.ts";
 import PostRepository from "../../../repository/PostRepository.ts";
-import { red } from "https://deno.land/std@0.160.0/fmt/colors.ts";
 
 interface Props {
   userId: number;

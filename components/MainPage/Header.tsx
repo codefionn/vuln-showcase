@@ -30,12 +30,15 @@ function ShowLoggedIn(props: HeaderProps) {
 export function Header(props: HeaderProps) {
   return (
     <header>
-      <a href="/" title="Go To Homepage">
-        <div>vuln-showcase</div>
-      </a>
-      <div class="flex-grow"></div>
-      {!props.userId && <ShowNotLoggedIn />}
-      {props.userId && <ShowLoggedIn userId={props.userId} />}
+      <div>
+        <a href="/" title="Go To Homepage">
+          <div>vuln-showcase</div>
+        </a>
+        <div class="flex-grow"></div>
+        {!props.userId && <ShowNotLoggedIn />}
+        {props.userId && <ShowLoggedIn userId={props.userId} />}
+      </div>
+      <div class="seperator"></div>
     </header>
   );
 }
