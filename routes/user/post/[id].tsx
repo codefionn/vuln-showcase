@@ -10,6 +10,7 @@ interface Props {
   userId: number;
   post: Post;
   error?: string;
+  success?: string;
 }
 
 async function handle(
@@ -81,7 +82,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     post.title = title;
     post.content = content;
 
-    await (await import("../../../repository/db.ts")).connectDb(
+    const updated = await (await import("../../../repository/db.ts")).connectDb(
       async (dbClient) => {
         const postRepo = new PostRepository(dbClient);
         return await postRepo.update(oldPost, post);
@@ -91,6 +92,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     return ctx.render({
       userId: userId,
       post: post,
+      success: updated ? "Changes saved successfully" : "No changes made",
     });
   },
 };
@@ -100,6 +102,7 @@ export default function EditPost({ data, params }: PageProps<Props>) {
   return (
     <MainPage title={"Post"} userId={data.userId} cssFiles={["user/post"]}>
       <h1>Edit post</h1>
+      {data.success ?? <p class="success">{data.success}</p>}
       {data.error ?? <p class="error">{data.error}</p>}
       <form method="post" action={"/user/post/" + post.id}>
         <input id="title" name="title" value={post.title} />

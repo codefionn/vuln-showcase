@@ -1,4 +1,4 @@
-import { PoolClient } from "pg";
+import { PoolClient, Transaction } from "pg";
 import Repository from "./Repository.ts";
 import { Confirm, InsertConfirm, SubjectNameTypes } from "../entity/Confirm.ts";
 
@@ -11,9 +11,9 @@ interface DbConfirm {
 
 export default class ConfirmRepository
   implements Repository<Confirm, InsertConfirm> {
-  private client: PoolClient;
+  private client: PoolClient | Transaction;
 
-  public constructor(client: PoolClient) {
+  public constructor(client: PoolClient | Transaction) {
     this.client = client;
   }
 

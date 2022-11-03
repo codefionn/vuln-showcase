@@ -1,4 +1,4 @@
-import { PoolClient } from "pg";
+import { PoolClient, Transaction } from "pg";
 import Repository from "./Repository.ts";
 import { InsertPost, Post } from "../entity/Post.ts";
 
@@ -11,9 +11,9 @@ export interface DbPost {
 }
 
 export default class PostRepository implements Repository<Post, InsertPost> {
-  private client: PoolClient;
+  private client: PoolClient | Transaction;
 
-  public constructor(client: PoolClient) {
+  public constructor(client: PoolClient | Transaction) {
     this.client = client;
   }
 

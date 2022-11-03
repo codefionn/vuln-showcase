@@ -1,4 +1,4 @@
-import { PoolClient } from "pg";
+import { PoolClient, Transaction } from "pg";
 import Repository from "./Repository.ts";
 import { HASH_SALT, InsertUser, User } from "../entity/User.ts";
 import { hash } from "argon2";
@@ -14,9 +14,9 @@ interface DbUser {
 }
 
 export default class UserRepository implements Repository<User, InsertUser> {
-  private client: PoolClient;
+  private client: PoolClient | Transaction;
 
-  public constructor(client: PoolClient) {
+  public constructor(client: PoolClient | Transaction) {
     this.client = client;
   }
 
