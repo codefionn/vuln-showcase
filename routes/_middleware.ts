@@ -1,5 +1,6 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import { assert } from "https://deno.land/std@0.150.0/_util/assert.ts";
+import { redirect } from "../utils/control.ts";
 import { createJwt, verifyJwt, verifyJwtInsecure } from "../utils/jwt.ts";
 
 export interface MiddleAuthentication {
@@ -30,6 +31,21 @@ export async function handler(
   req: Request,
   ctx: MiddlewareHandlerContext<MiddleAuthentication>,
 ) {
+  if (req.body) {
+    // Is a post request => Validate referer
+    const referer = req.headers.get("Referer");
+    if (!referer) {
+      return redirect("/"); // Don't let it through
+    }
+
+    const urlReferer = new URL(referer);
+    const url = new URL(req.url);
+
+    if (urlReferer.host !== url.host) {
+      return redirect("/"); // Don't let it through
+    }
+  }
+
   const cookies = parseCookieHeader(req.headers.get("Cookie") ?? undefined);
   let cookieAuth = cookies.get("AUTH");
   const oldId = ctx.state.id;
