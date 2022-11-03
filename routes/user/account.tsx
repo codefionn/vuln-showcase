@@ -80,6 +80,11 @@ export default function Account({ data }: PageProps<Props>) {
         </div>
       </div>
       <h2>Posts</h2>
+      <div class="create-post" style={{ float: "right" }}>
+        <a href="/create_post">
+          <button title="Create a post">Create a post</button>
+        </a>
+      </div>
       <Posts posts={posts} />
     </MainPage>
   );
