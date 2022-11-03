@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+    fresh-vuln-showcase:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            fresh-db:
+                condition: service_healthy
+            fresh-db-init:
+                condition: service_completed_successfully
+            mailer:
+                condition: service_started
+        links:
+            - "fresh-db:database"
+        volumes:
+            - .:/opt/vuln-showcase:r
+            - postgres-volume:/var/run/postgresql/:rw
+        environment:
+            PGHOST: /var/run/postgresql
+            PGPORT: 5432
+            PGDATABASE: app
+            PGUSER: appuser
+            PGPASSWORD: test
+        ports:
+            - 8000:8000
+    fresh-db:
+        image: 'postgres:14-alpine'
+        restart: always
+        environment:
+            POSTGRES_USER: appuser
+            POSTGRES_PASSWORD: test
+            POSTGRES_DB: app
+            LANG: C
+        volumes:
+            - postgres-volume:/var/run/postgresql/
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-appuser}"]
+            interval: 10s
+            timeout: 30s
+            retries: 5
+            start_period: 20s
+    fresh-db-init:
+        build:
+            context: ./init-sql
+            dockerfile: Dockerfile
+        depends_on:
+            fresh-db:
+                condition: service_healthy
+        volumes:
+            - postgres-volume:/var/run/postgresql/:rw
+            - ./init-sql:/init-sql:r
+    fresh-db-reinit:
+        build:
+            context: ./init-sql
+            dockerfile: DockerfileOnChange
+        depends_on:
+            fresh-db:
+                condition: service_healthy
+            fresh-db-init:
+                condition: service_completed_successfully
+        volumes:
+            - postgres-volume:/var/run/postgresql/:rw
+            - ./init-sql:/init-sql:r
+    mailer:
+        image: schickling/mailcatcher
+        ports:
+            - 1025:1025
+            - 1080:1080
+volumes:
+  postgres-volume:

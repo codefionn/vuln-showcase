@@ -1,0 +1,14 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+form > * {
+  margin: 5px;
+}
+
+form #register {
+  text-align: right;
+}

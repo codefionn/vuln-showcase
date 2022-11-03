@@ -1,0 +1,14 @@
+{
+  "imports": {
+    "$fresh/": "https://deno.land/x/fresh@1.1.2/",
+    "preact": "https://esm.sh/preact@10.11.0",
+    "preact/": "https://esm.sh/preact@10.11.0/",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
+    "pg": "https://deno.land/x/postgres@v0.17.0/mod.ts",
+    "argon2": "https://deno.land/x/argontwo@0.1.1/mod.ts",
+    "std/": "https://deno.land/std@0.161.0/",
+    "smtp": "https://deno.land/x/smtp@v0.7.0/mod.ts"
+  }
+}

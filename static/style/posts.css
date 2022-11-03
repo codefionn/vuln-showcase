@@ -1,0 +1,31 @@
+.posts {
+  margin-top: 10px;
+}
+
+.post .post-title {
+  font-weight: bold;
+}
+
+.post .post-short-description {
+  padding: 10px;
+  font-family: monospace;
+  margin: 0;
+}
+
+.posts {
+  display: flex;
+}
+
+@media screen and (min-width: 420px) {
+  .posts .post {
+    width: 50%;
+  }
+}
+
+.post:where(.post-is-private) .post-title {
+  width: 80%;
+}
+
+.post:where(.post-is-private) .post-is-private {
+  width: 20%;
+}
