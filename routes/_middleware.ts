@@ -1,6 +1,6 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import { assert } from "https://deno.land/std@0.150.0/_util/assert.ts";
-import { createJwt, verifyJwt } from "../utils/jwt.ts";
+import { createJwt, verifyJwt, verifyJwtInsecure } from "../utils/jwt.ts";
 
 export interface MiddleAuthentication {
   id?: number;
@@ -34,7 +34,7 @@ export async function handler(
   let cookieAuth = cookies.get("AUTH");
   const oldId = ctx.state.id;
   if (cookieAuth) {
-    const userdata = await verifyJwt(cookieAuth);
+    const userdata = await verifyJwtInsecure(cookieAuth);
     if (userdata && typeof userdata.id === "number") {
       ctx.state.id = userdata.id;
     } else {

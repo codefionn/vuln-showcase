@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "std/crypto/timing_safe_equal.ts";
 import { decode, encode } from "std/encoding/base64url.ts";
 
 const key = await crypto.subtle.generateKey(
@@ -27,7 +28,7 @@ export async function createJwt(
   return (jwtUnsigned + "." + signature).replace("=", "");
 }
 
-export async function verifyJwt(
+export async function verifyJwtInsecure(
   jwt: string,
 ): Promise<Record<string, unknown> | undefined> {
   try {
@@ -45,6 +46,35 @@ export async function verifyJwt(
 
     const serverJwt = await createJwt(usercontent);
     if (serverJwt !== jwt) { // Insecure
+      return undefined;
+    }
+
+    return usercontent;
+  } catch (err) { // e.g. JSON.parse can throw an SyntaxError
+    console.error(err);
+    return undefined;
+  }
+}
+
+export async function verifyJwt(
+  jwt: string,
+): Promise<Record<string, unknown> | undefined> {
+  try {
+    const [keycontentstr, usercontentstr, usersignaturestr] = jwt.split(".", 3);
+    if (!keycontentstr || !usercontentstr || !usersignaturestr) {
+      return undefined;
+    }
+
+    const usercontent = JSON.parse(
+      new TextDecoder().decode(decode(usercontentstr)),
+    );
+    if (typeof usercontent !== "object") { // Only object will be signed
+      return undefined;
+    }
+
+    const serverJwt = await createJwt(usercontent);
+    const encoder = new TextEncoder();
+    if (!timingSafeEqual(encoder.encode(serverJwt), encoder.encode(jwt))) {
       return undefined;
     }
 

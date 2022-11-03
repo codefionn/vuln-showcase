@@ -1,8 +1,7 @@
 import { PoolClient, Transaction } from "pg";
 import Repository from "./Repository.ts";
-import { HASH_SALT, InsertUser, User } from "../entity/User.ts";
-import { hash } from "argon2";
-import { encode } from "std/encoding/base64url.ts";
+import { InsertUser, User } from "../entity/User.ts";
+import { hashPassword } from "../utils/password.ts";
 
 interface DbUser {
   id: number;
@@ -32,13 +31,7 @@ export default class UserRepository implements Repository<User, InsertUser> {
   }
 
   public async insert(entity: InsertUser): Promise<User | undefined> {
-    const encoder = new TextEncoder();
-
-    const hashedPassword = encode(hash(
-      encoder.encode(entity.cleartextPassword),
-      encoder.encode(HASH_SALT),
-    ));
-
+    const hashedPassword = hashPassword(entity.cleartextPassword);
     const { rows } = await this.client.queryObject<
       DbUser
     >`INSERT INTO users (email, firstname, surname, hashed_password) VALUES (${entity.email}, ${entity.name}, ${entity.surname}, ${hashedPassword}) RETURNING id, email, firstname, surname, hashed_password, is_active`;

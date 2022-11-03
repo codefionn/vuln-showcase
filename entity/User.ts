@@ -1,7 +1,6 @@
 import { hash } from "argon2";
 import { encode } from "std/encoding/base64url.ts";
-
-export const HASH_SALT = "this-is-my-awesome-salt";
+import { hashPassword, verifyPasswordInsecure } from "../utils/password.ts";
 
 export interface InsertUser {
   email: string;
@@ -44,22 +43,10 @@ export class User implements LikeUser {
   }
 
   public async setPassword(cleartextPassword: string): Promise<void> {
-    const encoder = new TextEncoder();
-    this.hashedPassword = encode(
-      hash(
-        encoder.encode(cleartextPassword),
-        encoder.encode(HASH_SALT),
-      ),
-    );
+    this.hashedPassword = await hashPassword(cleartextPassword);
   }
 
   public async verifyPassword(cleartextPassword: string): Promise<boolean> {
-    const encoder = new TextEncoder();
-    const hashedPassword = encode(
-      hash(encoder.encode(cleartextPassword), encoder.encode(HASH_SALT)),
-    );
-
-    // This is insecure
-    return this.hashedPassword === hashedPassword;
+    return verifyPasswordInsecure(cleartextPassword, this.hashedPassword);
   }
 }
