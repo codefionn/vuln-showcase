@@ -8,6 +8,7 @@ import { createJwt } from "../../utils/jwt.ts";
 
 interface Props {
   error?: string;
+  warning?: string;
   login?: string;
 }
 
@@ -17,9 +18,22 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
       return redirect("/user/account");
     }
 
+    const url = new URL(req.url);
+    const warningId = url.searchParams.get("warning");
+    let warning = undefined;
+    if (warningId) {
+      switch (parseInt(warningId)) {
+        case 0:
+          warning = "Login to create a post";
+          break;
+      }
+    }
+
     ctx.state.id = undefined;
 
-    return ctx.render({});
+    return ctx.render({
+      warning: warning,
+    });
   },
   async POST(req, ctx) {
     if (ctx.state.id) {
@@ -44,7 +58,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
 
     if (!user || !(await user.verifyPassword(password.toString()))) {
       return ctx.render({
-        error: "Login or password are incorrected",
+        error: "Login or password are incorrect",
         login: login.toString(),
       });
     }
@@ -60,6 +74,7 @@ export default function Login({ data }: PageProps<Props>) {
   return (
     <MainPage title="Login" cssFiles={["user/login"]}>
       {data.error && <div class="error">{data.error}</div>}
+      {data.warning && <div class="warning">{data.warning}</div>}
       <form method="post" action="/user/login">
         <label for="login">E-Mail</label>
         <input

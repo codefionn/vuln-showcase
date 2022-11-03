@@ -5,30 +5,32 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_middleware.ts";
 import * as $1 from "./routes/api/joke.ts";
-import * as $2 from "./routes/index.tsx";
-import * as $3 from "./routes/post/[id].tsx";
-import * as $4 from "./routes/posts.tsx";
-import * as $5 from "./routes/user/account.tsx";
-import * as $6 from "./routes/user/confirm_register.tsx";
-import * as $7 from "./routes/user/login.tsx";
-import * as $8 from "./routes/user/logout.tsx";
-import * as $9 from "./routes/user/post/[id].tsx";
-import * as $10 from "./routes/user/register.tsx";
+import * as $2 from "./routes/create_post.tsx";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/post/[id].tsx";
+import * as $5 from "./routes/posts.tsx";
+import * as $6 from "./routes/user/account.tsx";
+import * as $7 from "./routes/user/confirm_register.tsx";
+import * as $8 from "./routes/user/login.tsx";
+import * as $9 from "./routes/user/logout.tsx";
+import * as $10 from "./routes/user/post/[id].tsx";
+import * as $11 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
   routes: {
     "./routes/_middleware.ts": $0,
     "./routes/api/joke.ts": $1,
-    "./routes/index.tsx": $2,
-    "./routes/post/[id].tsx": $3,
-    "./routes/posts.tsx": $4,
-    "./routes/user/account.tsx": $5,
-    "./routes/user/confirm_register.tsx": $6,
-    "./routes/user/login.tsx": $7,
-    "./routes/user/logout.tsx": $8,
-    "./routes/user/post/[id].tsx": $9,
-    "./routes/user/register.tsx": $10,
+    "./routes/create_post.tsx": $2,
+    "./routes/index.tsx": $3,
+    "./routes/post/[id].tsx": $4,
+    "./routes/posts.tsx": $5,
+    "./routes/user/account.tsx": $6,
+    "./routes/user/confirm_register.tsx": $7,
+    "./routes/user/login.tsx": $8,
+    "./routes/user/logout.tsx": $9,
+    "./routes/user/post/[id].tsx": $10,
+    "./routes/user/register.tsx": $11,
   },
   islands: {
     "./islands/Counter.tsx": $$0,

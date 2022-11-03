@@ -70,6 +70,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     const form = await req.formData();
     const titleForm = form.get("title");
     const contentForm = form.get("content");
+    const isPrivateFormat = form.get("is_private");
     if (!titleForm || !contentForm) {
       return redirect("/user/account");
     }
@@ -80,6 +81,15 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     const oldPost: Post = JSON.parse(JSON.stringify(post));
     post.title = title;
     post.content = content;
+    post.isPrivate = !!isPrivateFormat;
+
+    if (post.title.trim() === "" || post.content.trim() === "") {
+      return ctx.render({
+        userId: userId,
+        post: post,
+        error: "Title or content of the post cannot be empty",
+      });
+    }
 
     const updated = await (await import("../../../repository/db.ts")).connectDb(
       async (dbClient) => {
@@ -101,13 +111,22 @@ export default function EditPost({ data, params }: PageProps<Props>) {
   return (
     <MainPage title={"Post"} userId={data.userId} cssFiles={["user/post"]}>
       <h1>Edit post</h1>
-      {data.success ?? <p class="success">{data.success}</p>}
-      {data.error ?? <p class="error">{data.error}</p>}
+      {data.success && <div class="success">{data.success}</div>}
+      {data.error && <div class="error">{data.error}</div>}
       <form method="post" action={"/user/post/" + post.id}>
         <input id="title" name="title" value={post.title} />
         <textarea id="content" name="content" cols={80} rows={20}>
           {post.content}
         </textarea>
+        <div>
+          <input
+            id="is_private"
+            name="is_private"
+            type="checkbox"
+            checked={post.isPrivate}
+          />
+          <label for="is_private">Is Private</label>
+        </div>
         <button type="submit">Save</button>
       </form>
     </MainPage>

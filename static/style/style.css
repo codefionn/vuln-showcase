@@ -68,4 +68,32 @@ button {
     background-color: var(--button-background-color);
     border: 0px;
     border-radius: 8px;
+    padding: 5px;
+    margin: 3px;
+}
+
+button:hover {
+    border-color: black;
+    border: 1px solid;
+    padding: 4px;
+}
+
+div.warning, p.warning,
+div.error, p.error,
+div.success, p.success {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+
+div.warning, p.warning {
+    background-color: orange;
+}
+
+div.error, p.error {
+    background-color: #FF7070;
+}
+
+div.success, p.success {
+    background-color: green;
 }

@@ -18,7 +18,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
   async GET(req, ctx) {
     const userId = ctx.state.id;
     if (!userId) {
-      return redirect("/");
+      return redirect("/user/login");
     }
 
     const user = await (await import("../../repository/db.ts")).connectDb(
@@ -29,7 +29,7 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     );
 
     if (!user) {
-      return redirect("/");
+      return redirect("/user/login");
     }
 
     const posts = await (await import("../../repository/db.ts")).connectDb(

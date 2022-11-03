@@ -1,5 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import MainPage from "../components/MainPage.tsx";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.tsx";
 import { MiddleAuthentication } from "./_middleware.ts";
 
 interface Props {
@@ -22,12 +23,35 @@ export default function Home({ data }: PageProps<Props>) {
       cssFiles={["index"]}
       userId={data.userId}
     >
+      <div class="flex-grow"></div>
       <form method="get" action="/posts">
-        <div class="flex-grow"></div>
         <h1>vuln-showcase</h1>
-        <input id="search" name="q" required />
-        <div class="flex-grow"></div>
+        <div class="search">
+          <input id="search-input" name="q" required />
+          <span class="search-icon">
+            <button type="submit" title="Submit">
+              <MaterialDesignIcon fileName="search" alt="Search" />
+            </button>
+          </span>
+        </div>
       </form>
+      {data.userId &&
+        (
+          <div class="create-post">
+            <a href="/create_post">
+              <button title="Create a post">Create a post</button>
+            </a>
+          </div>
+        )}
+      {!data.userId &&
+        (
+          <div class="create-post">
+            <a href="/user/login?warning=0">
+              <button title="Create a post">Create a post</button>
+            </a>
+          </div>
+        )}
+      <div class="flex-grow"></div>
     </MainPage>
   );
 }

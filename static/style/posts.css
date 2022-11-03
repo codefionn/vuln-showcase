@@ -29,13 +29,15 @@ a:hover .post .post-title {
   display: flex;
 }
 
-@media screen and (min-width: 420px) {
-  .posts > .post {
+@media screen and (min-width: 690px) {
+  .posts > .post, .posts > a {
     width: 50%;
   }
+}
 
-  .posts > a {
-    width: 50%;
+@media screen and (max-width: 689px) {
+  .posts > .post, .posts > a {
+    width: 100%;
   }
 }
 
