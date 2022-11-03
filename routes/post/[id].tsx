@@ -57,7 +57,7 @@ export default function EditPost({ data, params }: PageProps<Props>) {
   const post = data.post;
   return (
     <MainPage title={"Post"} userId={data.userId} cssFiles={["post"]}>
-      <h1>Post: {post.id}</h1>
+      <h1>Post: {post.title}</h1>
       <div class="post">
         <div
           class="post-description"
