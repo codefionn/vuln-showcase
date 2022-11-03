@@ -33,8 +33,13 @@ This also starts up the testing suite.
 
 ## Vulnerabilities
 
+- Posts:
+  - Posts are rendered as HTML => XSS injection possible
 - Search:
   - Search for private posts: `private') OR 1=1 OR ('' = '`
   - Read every post, when increasing/decreasing the number in the URL
 - User:
-  - Edit all posts, not just your own
+  - Edit all posts, not just your own (increasing/decreasing number in the URL)
+- Possibility to guess passwords via hash or JWT signature (though this is kinda
+  hard)
+- Guess if a login (E-Mail) exists (time-based attack)
