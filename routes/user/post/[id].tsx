@@ -89,12 +89,9 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     const titleForm = form.get("title");
     const contentForm = form.get("content");
     const isPrivateFormat = form.get("is_private");
-    if (!titleForm || !contentForm) {
-      return redirect("/user/account");
-    }
 
-    const title = titleForm.toString();
-    const content = contentForm.toString();
+    const title = titleForm ? titleForm.toString() : "";
+    const content = contentForm ? contentForm.toString() : "";
 
     const oldPost: Post = JSON.parse(JSON.stringify(post));
     post.title = title;
