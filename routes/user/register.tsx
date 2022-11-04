@@ -55,18 +55,13 @@ export const handler: Handlers<Props, MiddleAuthentication> = {
     const passwordForm = form.get("password");
     const repeatedPasswordForm = form.get("repeat_password");
 
-    if (
-      !emailForm || !nameForm || !surnameForm || !passwordForm ||
-      !repeatedPasswordForm
-    ) {
-      return ctx.render({});
-    }
-
-    const email = emailForm.toString().trim();
-    const name = nameForm.toString().trim();
-    const surname = surnameForm.toString().trim();
-    const password = passwordForm.toString().trim();
-    const repeatedPassword = repeatedPasswordForm.toString().trim();
+    const email = emailForm ? emailForm.toString().trim() : "";
+    const name = nameForm ? nameForm.toString().trim() : "";
+    const surname = surnameForm ? surnameForm.toString().trim() : "";
+    const password = passwordForm ? passwordForm.toString().trim() : "";
+    const repeatedPassword = repeatedPasswordForm
+      ? repeatedPasswordForm.toString().trim()
+      : "";
 
     const resultPart = {
       login: email.toString(),
