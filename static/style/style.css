@@ -59,6 +59,12 @@ main {
     margin: auto;
 }
 
+@media screen and (max-width: 850px) {
+    main {
+        width: 100%;
+    }
+}
+
 .flex-grow {
     flex-grow: 1;
 }
